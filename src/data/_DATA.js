@@ -138,6 +138,36 @@ export function _getUsers () {
   })
 }
 
+export function _saveUser ({ name, password, avatarURL }) {
+  return new Promise((resolve, reject) => {
+    if (!name || !password || !avatarURL ) {
+      reject("Please provide name, password, and avatarURL");
+    }
+
+    const formattedUser = formatUser(name, password, avatarURL)
+    setTimeout(() => {
+      users = {
+        ...users,
+        [formattedUser.id]: formattedUser
+      }
+      /// TODO: The user id generation and use could be done with better style
+
+      resolve(formattedUser)
+    }, 1000)
+  })
+}
+
+function formatUser ({ name, password, avatarURL }) {
+  return {
+    id: generateUID(),
+    password,
+    name,
+    avatarURL,
+    questions: [],
+    answers: [],
+  }
+}
+
 export function _getQuestions () {
   return new Promise((resolve) => {
     setTimeout(() => resolve({...questions}), 1000)
@@ -160,13 +190,13 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function _saveQuestion (question) {
+export function _saveQuestion ({ optionOneText, optionTwoText, author }) {
   return new Promise((resolve, reject) => {
-    if (!question.optionOneText || !question.optionTwoText || !question.author) {
+    if (!optionOneText || !optionTwoText || !author) {
       reject("Please provide optionOneText, optionTwoText, and author");
     }
 
-    const formattedQuestion = formatQuestion(question)
+    const formattedQuestion = formatQuestion(optionOneText, optionTwoText, author)
     setTimeout(() => {
       questions = {
         ...questions,
@@ -178,7 +208,7 @@ export function _saveQuestion (question) {
   })
 }
 
-export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveAnswer ({ authedUser, qid, answer }) {
   return new Promise((resolve, reject) => {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
