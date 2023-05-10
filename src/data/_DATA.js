@@ -157,7 +157,7 @@ export function _saveUser ({ name, password, avatarURL }) {
   })
 }
 
-function formatUser ({ name, password, avatarURL }) {
+function formatUser (name, password, avatarURL) {
   return {
     id: generateUID(),
     password,
@@ -190,13 +190,13 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function _saveQuestion ({ optionOneText, optionTwoText, author }) {
+export function _saveQuestion (question) {
   return new Promise((resolve, reject) => {
-    if (!optionOneText || !optionTwoText || !author) {
+    if (!question.optionOneText || !question.optionTwoText || !question.author) {
       reject("Please provide optionOneText, optionTwoText, and author");
     }
 
-    const formattedQuestion = formatQuestion(optionOneText, optionTwoText, author)
+    const formattedQuestion = formatQuestion(question)
     setTimeout(() => {
       questions = {
         ...questions,
