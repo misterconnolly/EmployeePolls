@@ -142,6 +142,7 @@ export function _saveUser ({ name, password, avatarURL }) {
   return new Promise((resolve, reject) => {
     if (!name || !password || !avatarURL ) {
       reject("Please provide name, password, and avatarURL");
+      return;
     }
 
     const formattedUser = formatUser({ name, password, avatarURL })
@@ -194,6 +195,7 @@ export function _saveQuestion (question) {
   return new Promise((resolve, reject) => {
     if (!question.optionOneText || !question.optionTwoText || !question.author) {
       reject("Please provide optionOneText, optionTwoText, and author");
+      return;
     }
 
     const formattedQuestion = formatQuestion(question)
@@ -208,10 +210,11 @@ export function _saveQuestion (question) {
   })
 }
 
-export function _saveAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   return new Promise((resolve, reject) => {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
+      return;
     }
 
     setTimeout(() => {
