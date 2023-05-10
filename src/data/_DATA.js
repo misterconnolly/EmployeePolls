@@ -144,7 +144,7 @@ export function _saveUser ({ name, password, avatarURL }) {
       reject("Please provide name, password, and avatarURL");
     }
 
-    const formattedUser = formatUser(name, password, avatarURL)
+    const formattedUser = formatUser({ name, password, avatarURL })
     setTimeout(() => {
       users = {
         ...users,
@@ -157,14 +157,14 @@ export function _saveUser ({ name, password, avatarURL }) {
   })
 }
 
-function formatUser (name, password, avatarURL) {
+function formatUser ({ name, password, avatarURL }) {
   return {
     id: generateUID(),
     password,
     name,
     avatarURL,
+    answers: {},
     questions: [],
-    answers: [],
   }
 }
 
