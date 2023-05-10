@@ -1,4 +1,4 @@
-export function makeStringOfLength(length) {
+export function uniqueStringOfLength(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
