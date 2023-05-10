@@ -1,5 +1,5 @@
 import { _getUsers, _saveQuestionAnswer, _saveQuestion, _saveUser } from './_DATA';
-import { uniqueStringOfLength } from "../util/test";
+import { uniqueString } from "../util/test";
 
 const getUser = async (id) => {
     const allUsers = await _getUsers();
@@ -7,9 +7,9 @@ const getUser = async (id) => {
 }
 
 const createTestUser = async () => {
-    const name = uniqueStringOfLength(7);
-    const password = uniqueStringOfLength(7);
-    const avatarURL = uniqueStringOfLength(7);
+    const name = uniqueString(7);
+    const password = uniqueString(7);
+    const avatarURL = uniqueString(7);
 
     const user = await _saveUser({
       name: name,
@@ -20,8 +20,8 @@ const createTestUser = async () => {
 }
 
 const createTestQuestion = async (author) => {
-    const optionOne = uniqueStringOfLength(7);
-    const optionTwo = uniqueStringOfLength(7);
+    const optionOne = uniqueString(7);
+    const optionTwo = uniqueString(7);
 
     const question = await _saveQuestion({
         optionOneText: optionOne,
@@ -64,8 +64,8 @@ describe("_saveQuestionAnswer", () => {
   });
 
   it("should reject if missing authedUser", async () => {
-    const qid = uniqueStringOfLength(10);
-    const answer = uniqueStringOfLength(10);
+    const qid = uniqueString(10);
+    const answer = uniqueString(10);
 
     const questionAnswer = {
       qid: qid,
@@ -75,8 +75,8 @@ describe("_saveQuestionAnswer", () => {
   });
 
   it("should reject if missing qid", async () => {
-    const authedUser = uniqueStringOfLength(10);
-    const answer = uniqueStringOfLength(10);
+    const authedUser = uniqueString(10);
+    const answer = uniqueString(10);
 
     const questionAnswer = {
       authedUser: authedUser,
@@ -87,8 +87,8 @@ describe("_saveQuestionAnswer", () => {
   });
 
   it("should reject if missing answer", async () => {
-    const authedUser = uniqueStringOfLength(10);
-    const qid = uniqueStringOfLength(10);
+    const authedUser = uniqueString(10);
+    const qid = uniqueString(10);
 
     const questionAnswer = {
       authedUser: authedUser,
@@ -101,9 +101,9 @@ describe("_saveQuestionAnswer", () => {
 
 describe('_saveQuestion', () => {
     const expectedRejectMessage = "Please provide optionOneText, optionTwoText, and author";
-    const expectedOptionOneText = uniqueStringOfLength(10);
-    const expectedOptionTwoText = uniqueStringOfLength(10);
-    const expectedAuthor = uniqueStringOfLength(10);
+    const expectedOptionOneText = uniqueString(10);
+    const expectedOptionTwoText = uniqueString(10);
+    const expectedAuthor = uniqueString(10);
 
     it("should return a promise", () => {
         const result = _saveQuestion({
@@ -156,9 +156,9 @@ describe('_saveQuestion', () => {
 
 describe('_saveUser', () => {
     const expectedRejectMessage = "Please provide name, password, and avatarURL";
-    const expectedName = uniqueStringOfLength(10);
-    const expectedPassword = uniqueStringOfLength(10);
-    const expectedAvatarURL = uniqueStringOfLength(10);
+    const expectedName = uniqueString(10);
+    const expectedPassword = uniqueString(10);
+    const expectedAvatarURL = uniqueString(10);
 
     it("should return a promise", () => {
       const result = _saveUser({
