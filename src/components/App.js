@@ -10,6 +10,7 @@ import Home from './Home';
 import Login from './Login';
 import Nav from './Nav';
 import Logout from './Logout';
+import Register from './Register';
 
 const App = (props) => {
   useEffect(() => {
@@ -26,8 +27,9 @@ const App = (props) => {
             <Route path="/" exact element={<Home />} />
             <Route path="/question" exact element={<Home />} />
             <Route path="/leaderboard" exact element={<Home />} />
-            <Route path="/logout" exact element={<Logout />} />
+            <Route path="/register" exact element={<Register />} />
             <Route path="/login" exact element={<Login />} />
+            <Route path="/logout" exact element={<Logout />} />
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>
         )}

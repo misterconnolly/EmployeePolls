@@ -14,7 +14,13 @@ const Nav = () => {
             <Link to="/board">Leaderboard</Link>
           </li>
           <li>
-            <Link to="/logout">Logout</Link>
+            <Link to="/login">Log In</Link>
+          </li>
+          <li>
+            <Link to="/logout">Log Out</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
           </li>
         </ul>
       </nav>

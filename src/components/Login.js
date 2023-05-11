@@ -17,12 +17,14 @@ const Login = ({ users, dispatch }) => {
 
       if (authenticate(username, e.target.password.value)) {
         console.log("LOGIN SUCCEEDED");
-        dispatch({ type: SET_AUTHED_USER, user: users[username] });
+        dispatch({ type: SET_AUTHED_USER, user: users[username] && users[username].id });
         navigate("/");
+
       } else {
         console.log("LOGIN FAILED");
         setError(true);
         setUsername("");
+
       }
     };
 
@@ -54,7 +56,6 @@ const Login = ({ users, dispatch }) => {
         </form>
       </div>
     );
-
 };
 
 const mapStateToProps = (state) => ({
