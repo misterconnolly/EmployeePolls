@@ -7,12 +7,10 @@ import {
 } from "./_DATA.js";
 
 export function getInitialData() {
-  //return Promise.all([getUsers(), getQuestions(), {}]).then(
   return Promise.all([getUsers(), getQuestions()]).then(    
     ([users, questions, authedUser]) => ({
       users,
       questions,
-      // authedUser
     })
   );
 }

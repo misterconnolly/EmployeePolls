@@ -1,28 +1,32 @@
 import { useState } from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-    const [success, setSuccess] = useState(false);
+const Login = ({ users }) => {
+    const navigate = useNavigate();
     const [error, setError] = useState(false);
-
     const [username, setUsername] = useState("");
-    const [password, setPasword] = useState("");
-    const [user, setUser] = useState(null);
+
+    const authenticate = (username, password) => {
+      return users[username] && users[username].password === password;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-
-        // authenticate
-
-        // Assign user to current session
-
-        /// OR
-
-        // Wet
-
+        
+        if (authenticate(username, e.target.password.value)) {
+            console.log("SUCCEEDED LOGIN: FORWARDING TO / ");
+           navigate("/");
+        } else {
+            console.log("FAILED LOGIN: ");
+            setError(true);
+            setUsername('');
+        }
     }
 
-
+    const handleChangeUsername = (e) => {
+        setUsername(e.target.value);
+    }
 
     return (
         <div>
@@ -33,19 +37,22 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <label>
                     Username: 
-                    <input type="text" name="username" placeholder="Username" />
+                    <input type="text" name="username" value={username} placeholder="Username" onChange={handleChangeUsername} />
                 </label>
                 <label>
                     Password:
                     <input type="password" name="password" />
                 </label>
-                
-                <button type="submit" onClick={handleSubmit}>Login</button>
 
+                <button type="submit">Log in</button>
             </form>
         </div>
     );
 
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  users: state.users,
+});
+
+export default connect(mapStateToProps)(Login);

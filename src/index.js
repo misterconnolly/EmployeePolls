@@ -6,6 +6,7 @@ import reducer from "./reducers";
 import middleware from "./middleware";
 import { Provider } from "react-redux";
 import { legacy_createStore as createStore } from "redux";
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const store = createStore(reducer, middleware);
 
@@ -14,7 +15,9 @@ const root = createRoot(container);
 root.render(
 <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>
   );
