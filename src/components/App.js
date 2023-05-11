@@ -1,20 +1,22 @@
-import { useEffect, Fragment } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import { LoadingBar } from 'react-redux-loading-bar';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import '../assets/App.css';
 import Home from './Home';
 import Login from './Login';
 import Nav from './Nav';
+import Logout from './Logout';
 
 const App = (props) => {
   useEffect(() => {
     props.dispatch(handleInitialData());
   }, []);
 
-  return (
+    return (
     <Fragment>
       <LoadingBar />
       <div className="container">
@@ -24,8 +26,9 @@ const App = (props) => {
             <Route path="/" exact element={<Home />} />
             <Route path="/question" exact element={<Home />} />
             <Route path="/leaderboard" exact element={<Home />} />
-            <Route path="/logout" exact element={<Login />} />
+            <Route path="/logout" exact element={<Logout />} />
             <Route path="/login" exact element={<Login />} />
+            <Route path='*' element={<Navigate to='/' />} />
           </Routes>
         )}
       </div>
@@ -36,6 +39,7 @@ const App = (props) => {
 const mapStateToProps = (state) => (
   {
     loading: state.loading,
+    authedUser: state.authedUser
   }
 );
 
