@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { connect } from "react-redux";
+import { handleInitialData } from "../actions/shared";
 
-import './App.css';
+import '../assets/App.css';
+import Home from './Home';
 
-function App() {
+const App = (props) => {
+  useEffect(() => {
+    props.dispatch(handleInitialData());
+  }, []);
+
   return (
     <div className="App">
-
+      <Home />
     </div>
-  );
+  );  
 }
 
-export default App;
+const mapStateToProps = (state) => (
+  {
+    loading: state.loading,
+  }
+);
+
+export default connect(mapStateToProps)(App);

@@ -1,20 +1,23 @@
-// import { getInitialData } from "../utils/api";
-import { receiveUsers } from "./users"
-import { receiveQuestions } from "./questions";
-import { setAuthUser } from "./authedUser";
+import { getInitialData } from "../data/api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 
-const AUTHED_ID = "dan_abramov";
+export const RECEIVE_DATA = "RECEIVE_DATA";
+
+function receiveData(users, questions) {
+    return {
+      type: RECEIVE_DATA,
+      users,
+      questions,
+    };
+  }
 
 export function handleInitialData () {
     return (dispatch) => {
-        dispatch(showLoading());
+        //dispatch(showLoading());
 
-        return getInitialData().then(({ users, tweets }) => {
-            dispatch(receiveUsers(users));
-            // dispatch(receiveTweets(tweets));
-            dispatch(setAuthUser(AUTHED_ID));
-            dispatch(hideLoading());
+        return getInitialData().then(({ users, questions, authedUser }) => {
+            dispatch(receiveData(users, questions));
+            //dispatch(hideLoading());
         })
     }
 }

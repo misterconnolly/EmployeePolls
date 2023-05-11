@@ -1,29 +1,26 @@
-import { saveQuestion, saveAnswer } from "../utils/api";
+import { saveQuestion } from "../data/api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
-export const ANSWER_QUESTION = "ANSWER_QUESTION";
 
-function addQuestion(tweet) {
+function addQuestion(question) {
   return {
     type: ADD_QUESTION,
-    tweet
+    question
   }
 }
 
-export function handleAddQuestion(text, replyingTo) {
+export function handleAddQuestion(optionOneText, optionTwoText, author) {
   return (dispatch, getState) => {
-    const { authedUser } = getState();
+    // const { authedUser } = getState();
 
     dispatch(showLoading());
-
+    
     return saveQuestion({
-      text,
-      author: authedUser,
-      replyingTo,
+      optionOneText, optionTwoText, author
     })
-      .then((tweet) => dispatch(addQuestion(tweet)))
+      .then((question) => dispatch(addQuestion(question)))
       .then(() => dispatch(hideLoading()));
   }
 }
@@ -35,26 +32,4 @@ export function receiveQuestions(tweets) {
     tweets,
   };
 }
-
-export function answerQuestion({ id, authedUser, answer }) {
-  return {
-    type: ANSWER_QUESTION,
-    id,
-    authedUser,
-    answer,
-  };
-}
-
-export function handleAnswerQuestion(info) {
-  return (dispatch) => {
-    dispatch(showLoading());
-
-    return saveAnswer(info).catch((e) => {
-      console.warn("Error in handleAnswerQuestion: ", e);
-      dispatch(answerQuestion(info));
-      alert("There was an error answering the question. Please try again.");
-    });
-  };
-}
-
 
