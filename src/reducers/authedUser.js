@@ -4,9 +4,9 @@ import { REMOVE_AUTHED_USER } from "../actions/authedUser";
 export default function authedUser(state = null, action) {
     switch (action.type) {
         case SET_AUTHED_USER:
-            return  { ...state, authedUser: action.user };   
+            return action.user;   
         case REMOVE_AUTHED_USER:
-            return { ...state, authedUser: null }            
+            return null           
         default:
             return state;
     }

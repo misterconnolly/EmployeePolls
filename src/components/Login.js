@@ -16,12 +16,10 @@ const Login = ({ users, dispatch }) => {
       e.preventDefault();
 
       if (authenticate(username, e.target.password.value)) {
-        console.log("LOGIN SUCCEEDED");
         dispatch({ type: SET_AUTHED_USER, user: users[username] && users[username].id });
         navigate("/");
 
       } else {
-        console.log("LOGIN FAILED");
         setError(true);
         setUsername("");
 
