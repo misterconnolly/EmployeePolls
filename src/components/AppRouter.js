@@ -8,13 +8,13 @@ import Register from './Register';
 const AppRouter = ({ loggedIn }) => {
     return (
         <Routes>
-        <Route path='*' element={<Navigate to='/' />} />
-        <Route path="/" exact element={ loggedIn ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/question" exact element={ loggedIn ? <Home /> : <Navigate to="/" /> } />
-        <Route path="/leaderboard" exact element={ loggedIn ? <Home /> : <Navigate to="/" /> } />
-        <Route path="/logout" exact element={ loggedIn ? <Logout /> : <Navigate to="/" /> } />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/question" exact element={<Home />} />
+        <Route path="/leaderboard" exact element={<Home /> } />
+        <Route path="/logout" exact element={<Logout /> } />
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     );
 };

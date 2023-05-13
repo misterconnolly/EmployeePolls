@@ -151,8 +151,6 @@ export function _saveUser ({ name, password, avatarURL }) {
         ...users,
         [formattedUser.id]: formattedUser
       }
-      /// TODO: The user id generation and use could be done with better style
-
       resolve(formattedUser)
     }, 1000)
   })

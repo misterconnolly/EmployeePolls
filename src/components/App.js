@@ -17,7 +17,7 @@ const App = (props) => {
   }, []);
 
   const loggedIn = () => {
-    return props.authedUser !== null;
+    return false; // props && props.authedUser !== null;
   }
 
   return (
