@@ -16,9 +16,8 @@ const Login = ({ users, dispatch }) => {
       e.preventDefault();
 
       if (authenticate(username, password)) {
-        dispatch({ type: SET_AUTHED_USER, user: users[username] && users[username].id });
+        dispatch({ type: SET_AUTHED_USER, user: users[username] });
         navigate("/");
-
       } else {
         setError(true);
         setUsername("");

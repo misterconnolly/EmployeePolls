@@ -1,15 +1,12 @@
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import { REMOVE_AUTHED_USER } from "../actions/authedUser";
 import { useNavigate } from "react-router-dom";
 
 const Logout = ({ dispatch }) => {
-  useEffect(() => {
-    dispatch({
-      type: REMOVE_AUTHED_USER,
-      user: null,
-    });
-  }, []);
+  dispatch({
+    type: REMOVE_AUTHED_USER,
+    user: null,
+  });
 
   const navigate = useNavigate();
   navigate("/");

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveUser } from "../data/api";
 import { SET_AUTHED_USER } from "../actions/authedUser";
+import { ADD_USER } from "../actions/users";
 
 const Register = ({ users, dispatch }) => {
     const navigate = useNavigate();
@@ -13,14 +14,15 @@ const Register = ({ users, dispatch }) => {
         e.preventDefault();
         
         const form = e.currentTarget;
-        if (form.checkValidity() === true) {
+        if (form.checkValidity() === true && avatarIsValid) {
             saveUser({
-                username: username,
+                id: username,
                 password: password,
                 name: fullName,
                 avatarURL: avatarUrl
             }).then((result) => {
-                dispatch({ type: SET_AUTHED_USER, user: result.id });
+                dispatch({ type: ADD_USER, user: result });
+                dispatch({ type: SET_AUTHED_USER, user: result });
                 navigate("/");
             });
         }
@@ -33,11 +35,15 @@ const Register = ({ users, dispatch }) => {
         setUsername(e.target.value);
     }
     const usernameIsValid = () => {
-        return username.length > 1 && !usernameIsInvalid();
-    }
+      return formValidated && username.length > 1 && !usernameIsInvalid();
+    };
     const usernameIsInvalid = () => {
-        return users[username] !== undefined || /[^A-Za-z0-9]/.test(username);
-    }
+      return (
+        (formValidated && username === "") ||
+        users[username] !== undefined ||
+        /[^A-Za-z0-9]/.test(username)
+      );
+    };
 
     const [password, setPassword] = useState("");
     const handleChangePassword = (e) => {
@@ -74,23 +80,22 @@ const Register = ({ users, dispatch }) => {
     }
 
     const [avatarUrl, setAvatarUrl] = useState("");
-    const [showAvatar, setShowAvatar] = useState(false);
+    const [avatarIsValid, setAvatarIsValid] = useState(false);
     const handleChangeAvatarUrl = (e) => {
-        setShowAvatar(true);
+        setAvatarIsValid(true);
         setAvatarUrl(e.target.value);
     }
     const avatarUrlIsValid = () => {
-        return formValidated && avatarUrl.length > 1 && !avatarUrlIsInvalid() && showAvatar;
+        return formValidated && avatarUrl.length > 1 && !avatarUrlIsInvalid() && avatarIsValid;
     }
     const avatarUrlIsInvalid = () => {
       return (
-        formValidated && (avatarUrl === "" || (avatarUrl !== "" && !showAvatar))
+        formValidated && (avatarUrl === "" || (avatarUrl !== "" && !avatarIsValid))
       );
     };
-
     const handleGenerateAvatarClick = (e) => {
         e.preventDefault();
-        setShowAvatar(true);
+        setAvatarIsValid(true);
         const url = `https://avatars.dicebear.com/v2/gridy/${generateUID()}.svg`;
         setAvatarUrl(url);
     }
@@ -173,7 +178,6 @@ const Register = ({ users, dispatch }) => {
                 required
                 type="text"
                 placeholder="http://..."
-                defaultValue=""
                 value={avatarUrl}
                 isValid={avatarUrlIsValid()}
                 isInvalid={avatarUrlIsInvalid()}
@@ -184,11 +188,11 @@ const Register = ({ users, dispatch }) => {
               </Form.Text>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom06">
-              {showAvatar && (
+              {avatarIsValid && (
                 <Image
                   src={avatarUrl}
                   alt="User avatar"
-                  onError={() => setShowAvatar(false)}
+                  onError={() => setAvatarIsValid(false)}
                 />
               )}
             </Form.Group>

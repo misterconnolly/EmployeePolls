@@ -138,14 +138,14 @@ export function _getUsers () {
   })
 }
 
-export function _saveUser ({ name, password, avatarURL }) {
+export function _saveUser ({ id, name, password, avatarURL }) {
   return new Promise((resolve, reject) => {
-    if (!name || !password || !avatarURL ) {
-      reject("Please provide name, password, and avatarURL");
+    if (!id || !name || !password || !avatarURL ) {
+      reject("Please provide id, name, password, and avatarURL");
       return;
     }
 
-    const formattedUser = formatUser({ name, password, avatarURL })
+    const formattedUser = formatUser({ id, name, password, avatarURL })
     setTimeout(() => {
       users = {
         ...users,
@@ -156,9 +156,9 @@ export function _saveUser ({ name, password, avatarURL }) {
   })
 }
 
-function formatUser ({ name, password, avatarURL }) {
+function formatUser ({ id, name, password, avatarURL }) {
   return {
-    id: generateUID(),
+    id,
     password,
     name,
     avatarURL,
