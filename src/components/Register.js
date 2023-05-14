@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveUser } from "../data/api";
@@ -74,101 +74,130 @@ const Register = ({ users, dispatch }) => {
     }
 
     const [avatarUrl, setAvatarUrl] = useState("");
+    const [showAvatar, setShowAvatar] = useState(false);
     const handleChangeAvatarUrl = (e) => {
+        setShowAvatar(true);
         setAvatarUrl(e.target.value);
     }
     const avatarUrlIsValid = () => {
-        return formValidated && avatarUrl.length > 1 && !avatarUrlIsInvalid();
+        return formValidated && avatarUrl.length > 1 && !avatarUrlIsInvalid() && showAvatar;
     }
     const avatarUrlIsInvalid = () => {
-        return formValidated && avatarUrl === "";
+      return (
+        formValidated && (avatarUrl === "" || (avatarUrl !== "" && !showAvatar))
+      );
+    };
+
+    const handleGenerateAvatarClick = (e) => {
+        e.preventDefault();
+        setShowAvatar(true);
+        const url = `https://avatars.dicebear.com/v2/gridy/${generateUID()}.svg`;
+        setAvatarUrl(url);
     }
+    function generateUID () {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      }
 
     return (
-        <div>
-            <h2>Register</h2>
+      <div>
+        <h2>Register</h2>
 
-            <Form noValidate onSubmit={handleSubmit}>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="4" controlId="validationCustom01">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Username"
-                            defaultValue=""
-                            isValid={usernameIsValid()}
-                            isInvalid={usernameIsInvalid()}
-                            onChange={handleChangeUsername}
-                        />
-                        <Form.Control.Feedback type="invalid">Username exists or is invalid</Form.Control.Feedback>
-                    </Form.Group>
-                </Row>
+        <Form noValidate onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Username"
+                defaultValue=""
+                isValid={usernameIsValid()}
+                isInvalid={usernameIsInvalid()}
+                onChange={handleChangeUsername}
+              />
+              <Form.Control.Feedback type="invalid">
+                Username exists or is invalid
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
 
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="4" controlId="validationCustom02">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            required
-                            type="password"
-                            placeholder="Password"
-                            defaultValue=""
-                            isValid={passwordIsValid()}
-                            isInvalid={passwordIsInvalid()}
-                            onChange={handleChangePassword}                            
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="validationCustom03">
-                        <Form.Label>Confirm</Form.Label>
-                        <Form.Control
-                            required
-                            type="password"
-                            placeholder="Confirm"
-                            defaultValue=""
-                            isValid={confirmIsValid()}
-                            isInvalid={confirmIsInvalid()}
-                            onChange={handleChangeConfirm}                            
-                        />
-                        <Form.Control.Feedback type="invalid">Does not match</Form.Control.Feedback>
-                    </Form.Group>
-                </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Password"
+                defaultValue=""
+                isValid={passwordIsValid()}
+                isInvalid={passwordIsInvalid()}
+                onChange={handleChangePassword}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Confirm</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Confirm"
+                defaultValue=""
+                isValid={confirmIsValid()}
+                isInvalid={confirmIsInvalid()}
+                onChange={handleChangeConfirm}
+              />
+              <Form.Control.Feedback type="invalid">
+                Does not match
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
 
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="4" controlId="validationCustom04">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="First and last"
-                            defaultValue=""
-                            isValid={fullNameIsValid()}
-                            isInvalid={fullNameIsInvalid()}
-                            onChange={handleChangeFullName}                             
-                        />
-                    </Form.Group>
-                </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="First and last"
+                defaultValue=""
+                isValid={fullNameIsValid()}
+                isInvalid={fullNameIsInvalid()}
+                onChange={handleChangeFullName}
+              />
+            </Form.Group>
+          </Row>
 
-                <Row className="mb-5">
-                    <Form.Group as={Col} md="4" controlId="validationCustom05">
-                        <Form.Label>Avatar URL</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="http://..."
-                            defaultValue=""
-                            isValid={avatarUrlIsValid()}
-                            isInvalid={avatarUrlIsInvalid()}
-                            onChange={handleChangeAvatarUrl}                             
-                        />
-                    </Form.Group>
-                </Row>
+          <Row className="mb-5">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Avatar URL</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="http://..."
+                defaultValue=""
+                value={avatarUrl}
+                isValid={avatarUrlIsValid()}
+                isInvalid={avatarUrlIsInvalid()}
+                onChange={handleChangeAvatarUrl}
+              />
+              <Form.Text muted>
+                <Button className="linkButton" onClick={handleGenerateAvatarClick}>Click here for a random avatar</Button>
+              </Form.Text>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom06">
+              {showAvatar && (
+                <Image
+                  src={avatarUrl}
+                  alt="User avatar"
+                  onError={() => setShowAvatar(false)}
+                />
+              )}
+            </Form.Group>
+          </Row>
 
-                <Button type="submit">Submit</Button>
-
-            </Form>
-
-        </div>
-    )
+          <Button type="submit">Submit</Button>
+        </Form>
+      </div>
+    );
 };
 
 const mapStateToProps = (state) => ({
