@@ -14,7 +14,7 @@ const Register = ({ users, dispatch }) => {
         e.preventDefault();
         
         const form = e.currentTarget;
-        if (form.checkValidity() === true && avatarIsValid) {
+        if (form.checkValidity() === true && allInputsValid) {
             saveUser({
                 id: username,
                 password: password,
@@ -29,6 +29,15 @@ const Register = ({ users, dispatch }) => {
 
         setFormValidated(true);
     }
+
+    const allInputsValid = () => {
+        return usernameIsValid
+            && passwordIsValid
+            && confirmIsValid
+            && fullNameIsValid
+            && avatarIsValid;
+    }
+
 
     const [username, setUsername] = useState("");
     const handleChangeUsername = (e) => {
@@ -62,10 +71,22 @@ const Register = ({ users, dispatch }) => {
         setConfirm(e.target.value);
     }
     const confirmIsValid = () => {
-        return (formValidated || confirm.length > 1) && confirm.length >= password.length && !confirmIsInvalid();
+        return (
+          (
+            (formValidated && confirm.length > 1) ||
+            (passwordIsValid && confirm.length > 1)
+            ) &&
+          confirm.length >= password.length &&
+          !confirmIsInvalid()
+        );
     }
     const confirmIsInvalid = () => {
-        return (formValidated || confirm.length !== 0) && confirm.length >= password.length && confirm !== password;
+        return (
+          
+            (!formValidated && passwordIsValid() && confirm.length >= password.length && confirm !== password)
+            || 
+            (formValidated && passwordIsValid && confirm !== password)
+        );
     }
 
     const [fullName, setFullName] = useState("");

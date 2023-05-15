@@ -24,7 +24,7 @@ const App = (props) => {
     <Fragment>
       <LoadingBar />
       <div className="container">
-        <Navigation loggedIn={ props.authedUser !== null } />
+        <Navigation user={props.authedUser} />
         {props.loading === true ? null : (
           <AppRouter loggedIn={loggedIn()} />
         )}

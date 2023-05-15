@@ -5,7 +5,7 @@ const sanitizeAuthedUser = (user) => {
     return {
       id: user.id,
       name: user.name,
-      avatarURL: user.avatarUrl,
+      avatarURL: user.avatarURL,
     };
   };
 

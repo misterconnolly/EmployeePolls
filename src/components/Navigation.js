@@ -2,11 +2,13 @@ import Container from "react-bootstrap/Container";
 import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Image } from "react-bootstrap";
 
-const Navigation = ({ loggedIn }) => {
+const Navigation = ({ user }) => {
   return (
     <Navbar bg="light" variant="light">
-      {loggedIn && (
+      {/* {user !== undefined && user !== null && ( */}
+      {user !== null && (
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Employee Polls</Navbar.Brand>
@@ -23,13 +25,20 @@ const Navigation = ({ loggedIn }) => {
             </LinkContainer>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
+            {user.avatarURL && 
+            <Image src={user.avatarURL} width="40" className="img-thumbnail" />
+            }
+            &nbsp;
+            <span>{`${user.id}`}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <LinkContainer to="/logout">
               <Nav.Link>Log Out</Nav.Link>
             </LinkContainer>
           </Navbar.Collapse>
         </Container>
       )}
-      {!loggedIn && (
+      {/* {(user === undefined || user === null) && ( */}
+      {(user === null) && (
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Employee Polls</Navbar.Brand>
