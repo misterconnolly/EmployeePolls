@@ -13,6 +13,8 @@ const Register = ({ users, dispatch }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setFormValidated(true);
+
         const form = e.currentTarget;
         if (form.checkValidity() === true && allInputsValid()) {
             saveUser({
@@ -26,8 +28,6 @@ const Register = ({ users, dispatch }) => {
                 navigate("/");
             });
         }
-
-        setFormValidated(true);
     }
 
     const allInputsValid = () => {
@@ -38,13 +38,12 @@ const Register = ({ users, dispatch }) => {
             && avatarIsValid;
     }
 
-
     const [username, setUsername] = useState("");
     const handleChangeUsername = (e) => {
         setUsername(e.target.value);
     }
     const usernameIsValid = () => {
-      return formValidated && username.length > 1 && !usernameIsInvalid();
+      return username.length > 1 && !usernameIsInvalid();
     };
     const usernameIsInvalid = () => {
       return (
@@ -71,11 +70,10 @@ const Register = ({ users, dispatch }) => {
         setConfirm(e.target.value);
     }
     const confirmIsValid = () => {
-      console.log(password, confirm, password === confirm);
         return (
           (
             (formValidated && confirm.length > 1) ||
-            (passwordIsValid && confirm.length > 1)
+            (passwordIsValid() && password === confirm)
             ) &&
           confirm.length >= password.length &&
           !confirmIsInvalid() 
@@ -85,7 +83,7 @@ const Register = ({ users, dispatch }) => {
         return (
             (!formValidated && passwordIsValid() && confirm.length >= password.length && confirm !== password)
             || 
-            (formValidated && passwordIsValid && confirm !== password)
+            (formValidated && passwordIsValid() && confirm !== password)
         );
     }
 
@@ -94,7 +92,7 @@ const Register = ({ users, dispatch }) => {
         setFullName(e.target.value);
     }
     const fullNameIsValid = () => {
-        return formValidated && fullName.length > 1 && !fullNameIsInvalid();
+        return fullName.length > 1 && !fullNameIsInvalid();
     }
     const fullNameIsInvalid = () => {
         return formValidated && fullName === "";
