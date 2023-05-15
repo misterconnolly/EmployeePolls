@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import { LoadingBar } from 'react-redux-loading-bar';
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/App.css';
 
@@ -16,18 +15,16 @@ const App = (props) => {
     props.dispatch(handleInitialData());
   }, []);
 
-  const loggedIn = () => {
-    return false; // props && props.authedUser !== null;
-  }
-
   return (
     <Fragment>
       <LoadingBar />
       <div className="container">
-        <Navigation user={props.authedUser} />
-        {props.loading === true ? null : (
-          <AppRouter loggedIn={loggedIn()} />
-        )}
+      {props.loading === true ? null : (
+        <Navigation loggedInUser={props.authedUser ? props.authedUser : null } />
+      )}
+      {props.loading === true ? null : (
+        <AppRouter loggedInUser={props.authedUser ? props.authedUser : null } />
+      )}
       </div>
     </Fragment>
   );  

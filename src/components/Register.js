@@ -12,9 +12,9 @@ const Register = ({ users, dispatch }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const form = e.currentTarget;
-        if (form.checkValidity() === true && allInputsValid) {
+        if (form.checkValidity() === true && allInputsValid()) {
             saveUser({
                 id: username,
                 password: password,
@@ -31,10 +31,10 @@ const Register = ({ users, dispatch }) => {
     }
 
     const allInputsValid = () => {
-        return usernameIsValid
-            && passwordIsValid
-            && confirmIsValid
-            && fullNameIsValid
+        return usernameIsValid()
+            && passwordIsValid()
+            && confirmIsValid()
+            && fullNameIsValid()
             && avatarIsValid;
     }
 
@@ -71,18 +71,18 @@ const Register = ({ users, dispatch }) => {
         setConfirm(e.target.value);
     }
     const confirmIsValid = () => {
+      console.log(password, confirm, password === confirm);
         return (
           (
             (formValidated && confirm.length > 1) ||
             (passwordIsValid && confirm.length > 1)
             ) &&
           confirm.length >= password.length &&
-          !confirmIsInvalid()
+          !confirmIsInvalid() 
         );
     }
     const confirmIsInvalid = () => {
         return (
-          
             (!formValidated && passwordIsValid() && confirm.length >= password.length && confirm !== password)
             || 
             (formValidated && passwordIsValid && confirm !== password)
