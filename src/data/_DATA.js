@@ -16,7 +16,7 @@ let users = {
     id: 'tylermcginnis',
     password:'abc321',
     name: 'Tyler McGinnis',
-    avatarURL: 'https://avatars.dicebear.com/v2/gridy/a362712f8716a8a016dfe7f4552f577e.svg',
+    avatarURL: '',
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -27,7 +27,7 @@ let users = {
     id: 'mtsamis',
     password:'xyz123',
     name: 'Mike Tsamis',
-    avatarURL: 'https://avatars.dicebear.com/v2/gridy/3a7e3e401a01d82e64efb6a011b72159.svg',
+    avatarURL: '',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',

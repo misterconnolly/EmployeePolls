@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
+import { createAvatarUrlIfEmpty } from "../util/avatar";
 
 const Question = (props) => {
     const { id } = useParams();
@@ -39,7 +40,7 @@ const Question = (props) => {
         {question && author && props.authedUser && (
           <div>
             <h1>Poll by ${author.id}</h1>
-            <img src={author.avatarURL} alt="User avatar" className="avatar-max-width-20p" />
+            <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
             <h2>Would you rather?</h2>
             <ul>
                 <li>

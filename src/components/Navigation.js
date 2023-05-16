@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/Container";
 import { LinkContainer } from "react-router-bootstrap";
 import { Image, Nav, Navbar } from "react-bootstrap";
+import { createAvatarUrlIfEmpty } from "../util/avatar";
 
-const Navigation = ({ loggedInUser }) => {
-  
+const Navigation = ({ loggedInUser }) => { 
   return (
     <Navbar bg="light" variant="light">
       {(loggedInUser !== null && loggedInUser !== undefined) && (
@@ -24,7 +24,7 @@ const Navigation = ({ loggedInUser }) => {
           </Nav>
           <Navbar.Collapse className="justify-content-end">
             {loggedInUser.avatarURL && 
-            <Image src={loggedInUser.avatarURL} width="40" className="img-thumbnail" />
+            <Image src={createAvatarUrlIfEmpty(loggedInUser.avatarURL, loggedInUser.name)} width="40" className="img-thumbnail" />
             }
             &nbsp;
             <span>{`${loggedInUser.id}`}</span>

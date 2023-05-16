@@ -1,6 +1,7 @@
 import { Table, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
+import { nameAvatarUrl } from "../util/avatar";
 
 const Leaderboard = ({users}) => {    
     const [sortedUsers, setSortedUsers] = useState([]);
@@ -22,7 +23,7 @@ const Leaderboard = ({users}) => {
       return {
         id: user.id,
         name: user.name,
-        avatarURL: user.avatarURL,
+        avatarURL: (user.avatarURL && user.avatarURL !== "") ? user.avatarURL: nameAvatarUrl(user.name),
         answersCount: answersCount,
         questionsCount: questionsCount,
         totalCount: answersCount + questionsCount,
