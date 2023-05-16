@@ -14,3 +14,15 @@ export function removeAuthedUser() {
         user: null,
     }
 }
+
+export function handleLogin(user) {
+    return (dispatch, getState) => { 
+      dispatch(setAuthedUser(user));
+    };
+  }
+
+  export function handleLogout() {
+    return (dispatch, getState) => {
+      dispatch(removeAuthedUser());
+    };
+  }

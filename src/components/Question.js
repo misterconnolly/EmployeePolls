@@ -16,6 +16,17 @@ const Question = (props) => {
             setAuthor(props.users[props.questions[id].author])
     }, [props.users, props.questions, id]);    
 
+    const handleOptionOne = (e) => {
+        props.dispatch({
+            type: ANSWER_QUESTION,
+            answer: { authedUser, qid, answer }
+        })
+    };
+
+    const handleOptionTwo = (e) => {
+
+    };
+
     return (
       <div>
         {question && author && props.authedUser && (
@@ -26,9 +37,11 @@ const Question = (props) => {
             <ul>
                 <li>
                     ${question.optionOne.text}
+                    <button onClick={handleOptionOne}>Answer</button>
                 </li>
                 <li>
                     ${question.optionTwo.text}
+                    <button onClick={handleOptionOne}>Answer</button>
                 </li>
             </ul>
           </div>

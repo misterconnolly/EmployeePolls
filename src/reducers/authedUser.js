@@ -5,9 +5,7 @@ const sanitizeUser = (user) => {
     return {
       id: user.id,
       name: user.name,
-      avatarURL: user.avatarURL,
-      answers: user.answers,
-      questions: user.questions
+      avatarURL: user.avatarURL
     };
   };
 

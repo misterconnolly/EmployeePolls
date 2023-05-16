@@ -2,7 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { SET_AUTHED_USER } from "../actions/authedUser";
+import { handleLogin } from "../actions/authedUser";
 
 const Login = ({ users, dispatch }) => {
     const navigate = useNavigate();
@@ -16,7 +16,8 @@ const Login = ({ users, dispatch }) => {
       e.preventDefault();
 
       if (authenticate(username, password)) {
-        dispatch({ type: SET_AUTHED_USER, user: users[username] });
+        dispatch(handleLogin(users[username]));
+
         navigate("/");
       } else {
         setError(true);

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button, Col, Form, Row, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveUser } from "../data/api";
-import { SET_AUTHED_USER } from "../actions/authedUser";
-import { ADD_USER } from "../actions/users";
+import { handleAddUser } from "../actions/users";
+import { SET_AUTHED_USER, handleLogin } from "../actions/authedUser";
 
 const Register = ({ users, dispatch }) => {
     const navigate = useNavigate();
@@ -17,16 +16,21 @@ const Register = ({ users, dispatch }) => {
 
         const form = e.currentTarget;
         if (form.checkValidity() === true && allInputsValid()) {
-            saveUser({
-                id: username,
-                password: password,
-                name: fullName,
-                avatarURL: avatarUrl
-            }).then((result) => {
-                dispatch({ type: ADD_USER, user: result });
-                dispatch({ type: SET_AUTHED_USER, user: result });
-                navigate("/");
-            });
+          dispatch(handleAddUser({
+              id: username,
+              password: password,
+              name: fullName,
+              avatarURL: avatarUrl
+          }));
+
+          dispatch(handleLogin({
+            id: username,
+            password: password,
+            name: fullName,
+            avatarURL: avatarUrl
+          }));
+
+          navigate("/");              
         }
     }
 
