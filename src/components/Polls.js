@@ -8,31 +8,35 @@ const filterQuestions = (user, questions) => {
     const answerArray = user && user.answers ? Object.keys(user.answers) : [];
 
     return [
-        questionArray.filter(q => !answerArray.includes(q.id)),
-        questionArray.filter(q => answerArray.includes(q.id))
+        questionArray.filter(q => answerArray.includes(q.id)),
+        questionArray.filter(q => !answerArray.includes(q.id))
     ]
 }
 
 
 const Polls = (props) => {
-    const userWithAnswers = props.users[props.authedUser.id]
-
-    const [haveAnswers, noAnswers] = filterQuestions(userWithAnswers, props.questions);
-
+    if (props.users && props.questions && props.authedUser) {
+      
+      const userWithAnswers = props.users[props.authedUser.id]
+      const [haveAnswers, noAnswers] = filterQuestions(userWithAnswers, props.questions);
 
       return (
         <div>
           <span>New Questions</span>
           <ul>
-            {haveAnswers && haveAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
+            {noAnswers && noAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
           </ul>
           <span>Done</span>
           <ul>
-            {noAnswers && noAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
+            {haveAnswers && haveAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
           </ul>
         </div>
       );
-    
+    } 
+    else 
+    {
+      return <div></div>;
+    }
 };
 
 const mapStateToProps = (state) => ({
