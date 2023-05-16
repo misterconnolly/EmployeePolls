@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 
-
 const Question = (props) => {
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
@@ -24,18 +23,16 @@ const Question = (props) => {
             authedUser: props.authedUser.id,
             qid: id, 
             answer: 'optionOne'}));
-            navigateHome();
+            navigate("/");
     };
 
     const handleOptionTwo = (e) => {
         props.dispatch(handleAnswerQuestion({
-            authedUser: props.authedUser,
+            authedUser: props.authedUser.id,
             qid: id, 
             answer: 'optionTwo'}));
-            navigateHome();
+            navigate("/");
     };
-
-    const navigateHome = () => { navigate("/"); }
 
     return (
       <div>

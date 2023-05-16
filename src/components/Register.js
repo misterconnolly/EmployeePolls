@@ -214,6 +214,7 @@ const Register = ({ users, dispatch }) => {
                 <Image
                   src={avatarUrl}
                   alt="User avatar"
+                  className="avatar-max-width-20p"
                   onError={() => setAvatarIsValid(false)}
                 />
               )}

@@ -13,25 +13,32 @@ const filterQuestions = (user, questions) => {
     ]
 }
 
+
 const Polls = (props) => {
-    const [haveAnswers, noAnswers] = filterQuestions(props.authedUser, props.questions);
-    return (
-      <div>
-        <span>New Questions</span>
-        <ul>
-          {haveAnswers && haveAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
-        </ul>
-        <span>Done</span>
-        <ul>
-          {noAnswers && noAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
-        </ul>
-      </div>
-    );
+    const userWithAnswers = props.users[props.authedUser.id]
+
+    const [haveAnswers, noAnswers] = filterQuestions(userWithAnswers, props.questions);
+
+
+      return (
+        <div>
+          <span>New Questions</span>
+          <ul>
+            {haveAnswers && haveAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
+          </ul>
+          <span>Done</span>
+          <ul>
+            {noAnswers && noAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
+          </ul>
+        </div>
+      );
+    
 };
 
 const mapStateToProps = (state) => ({
-    questions: state.questions,
-    authedUser: state.authedUser
+  users: state.users,
+  questions: state.questions,
+  authedUser: state.authedUser,
 });
 
 export default connect(mapStateToProps)(Polls);
