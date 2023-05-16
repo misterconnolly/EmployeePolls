@@ -13,7 +13,6 @@ const filterQuestions = (user, questions) => {
     ]
 }
 
-
 const Polls = (props) => {
     if (props.users && props.questions && props.authedUser) {
       

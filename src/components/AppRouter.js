@@ -6,6 +6,7 @@ import Logout from './Logout';
 import Register from './Register';
 import Question from "./Question";
 import NewQuestion from "./NewQuestion";
+import Leaderboard from "./Leaderboard";
 
 const AppRouter = ({ loggedInUser }) => {
     return (
@@ -13,7 +14,7 @@ const AppRouter = ({ loggedInUser }) => {
         <Route path="/" exact element={<Home />} />
         <Route path="/question" exact element={<NewQuestion />} />
         <Route path="/question/:id" exact element={<Question />} />
-        <Route path="/leaderboard" exact element={<Home />} />
+        <Route path="/leaderboard" exact element={<Leaderboard />} />
         <Route path="/logout" exact element={<Logout />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
