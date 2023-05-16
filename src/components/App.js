@@ -9,7 +9,6 @@ import '../assets/App.css';
 import Navigation from './Navigation';
 import AppRouter from './AppRouter';
 
-
 const App = (props) => {
   useEffect(() => {
     props.dispatch(handleInitialData());
@@ -21,7 +20,9 @@ const App = (props) => {
     <Fragment>
       <LoadingBar />
       <Navigation loggedInUser={loggedInUser()} />
-      <AppRouter loggedInUser={loggedInUser()} />
+      <div>
+        <AppRouter loggedInUser={loggedInUser()} />
+      </div>
     </Fragment>
   );  
 }

@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Home from './Home';
+import Polls from './Polls';
 import Login from './Login';
 import Logout from './Logout';
 import Register from './Register';
@@ -11,7 +11,7 @@ import Leaderboard from "./Leaderboard";
 const AppRouter = ({ loggedInUser }) => {
     return (
       <Routes>
-        <Route path="/" exact element={(loggedInUser) ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/" exact element={(loggedInUser) ? <Polls /> : <Navigate to="/login" />} />
         <Route path="/question" exact element={(loggedInUser) ? <NewQuestion /> : <Navigate to="/login" />} />
         <Route path="/question/:id" exact element={(loggedInUser) ? <Question /> : <Navigate to="/login" />} />
         <Route path="/leaderboard" exact element={(loggedInUser) ? <Leaderboard /> : <Navigate to="/login" />} />

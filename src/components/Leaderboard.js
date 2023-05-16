@@ -1,4 +1,4 @@
-import { Table, Image } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
 import { nameAvatarUrl } from "../util/avatar";
