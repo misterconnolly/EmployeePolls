@@ -10,7 +10,7 @@ function answerQuestion(answer) {
   }
 }
 
-export function handleAnswerQuestion(authedUser, qid, answer) {
+export function handleAnswerQuestion({authedUser, qid, answer}) {
     return (dispatch, getState) => {
       dispatch(showLoading());
       

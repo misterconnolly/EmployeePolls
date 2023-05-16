@@ -31,7 +31,7 @@ const Polls = (props) => {
 
 const mapStateToProps = (state) => ({
     questions: state.questions,
-    authedUser: state.users[state.authedUser.id]
+    authedUser: state.authedUser
 });
 
 export default connect(mapStateToProps)(Polls);

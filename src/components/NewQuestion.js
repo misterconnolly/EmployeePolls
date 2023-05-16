@@ -95,7 +95,7 @@ const NewQuestion = ({ dispatch, authedUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-    authedUser: state.users[state.authedUser.id] 
+    authedUser: state.authedUser 
 });
 
 export default connect(mapStateToProps)(NewQuestion);

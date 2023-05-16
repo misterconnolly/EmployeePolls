@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
-import { ANSWER_QUESTION } from "../actions/answers";
+import { useParams, useNavigate } from "react-router-dom";
+import { handleAnswerQuestion } from "../actions/answers";
+
 
 const Question = (props) => {
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
     const [author, setAuthor] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setQuestion(props.questions[id]);
@@ -18,18 +20,22 @@ const Question = (props) => {
     }, [props.users, props.questions, id]);    
 
     const handleOptionOne = (e) => {
-        props.dispatch({
-            type: ANSWER_QUESTION,
-            answer:  { } //{ authedUser, qid, answer }
-        })
+        props.dispatch(handleAnswerQuestion({
+            authedUser: props.authedUser.id,
+            qid: id, 
+            answer: 'optionOne'}));
+            navigateHome();
     };
 
     const handleOptionTwo = (e) => {
-        props.dispatch({
-            type: ANSWER_QUESTION,
-            answer:  { } //{ authedUser, qid, answer }
-        })
+        props.dispatch(handleAnswerQuestion({
+            authedUser: props.authedUser,
+            qid: id, 
+            answer: 'optionTwo'}));
+            navigateHome();
     };
+
+    const navigateHome = () => { navigate("/"); }
 
     return (
       <div>
