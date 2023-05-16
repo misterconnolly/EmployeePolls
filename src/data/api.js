@@ -8,9 +8,9 @@ import {
 
 export function getInitialData() {
   return Promise.all([getUsers(), getQuestions()]).then(    
-    ([users, questions, authedUser]) => ({
-      users,
-      questions,
+    ([users, questions]) => ({
+      users,  
+      questions
     })
   );
 }

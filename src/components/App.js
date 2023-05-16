@@ -15,17 +15,13 @@ const App = (props) => {
     props.dispatch(handleInitialData());
   }, []);
 
+  const loggedInUser = () => props.authedUser ? props.authedUser : null;
+
   return (
     <Fragment>
       <LoadingBar />
-      <div className="container">
-      {props.loading === true ? null : (
-        <Navigation loggedInUser={props.authedUser ? props.authedUser : null } />
-      )}
-      {props.loading === true ? null : (
-        <AppRouter loggedInUser={props.authedUser ? props.authedUser : null } />
-      )}
-      </div>
+      <Navigation loggedInUser={loggedInUser()} />
+      <AppRouter loggedInUser={loggedInUser()} />
     </Fragment>
   );  
 }

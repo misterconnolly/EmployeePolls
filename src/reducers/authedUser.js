@@ -1,18 +1,20 @@
 import { SET_AUTHED_USER } from "../actions/authedUser";
 import { REMOVE_AUTHED_USER } from "../actions/authedUser";
 
-const sanitizeAuthedUser = (user) => {
+const sanitizeUser = (user) => {
     return {
       id: user.id,
       name: user.name,
       avatarURL: user.avatarURL,
+      answers: user.answers,
+      questions: user.questions
     };
   };
 
 export default function authedUser(state = null, action) {
     switch (action.type) {
         case SET_AUTHED_USER:
-            return sanitizeAuthedUser(action.user);   
+            return sanitizeUser(action.user);   
         case REMOVE_AUTHED_USER:
             return null           
         default:

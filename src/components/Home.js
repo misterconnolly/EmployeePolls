@@ -1,9 +1,10 @@
-const Home = () => {
+import Polls from "./Polls";
+
+const Home = () => {  
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+      <Polls />
   );
 };
+
 
 export default Home;

@@ -37,7 +37,6 @@
   }
 }
 
-
 .linkButton {
   background: none!important;
   border: none;
@@ -49,4 +48,8 @@
   font-size: .875em;
   --bs-text-opacity: 1;
   color: #6c757d!important
+}
+
+.avatar-max-width-20p {
+  max-width: 20%;
 }
