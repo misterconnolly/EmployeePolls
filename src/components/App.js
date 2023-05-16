@@ -28,7 +28,7 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   loading: state.loading,
-  authedUser: state.authedUser,
+  authedUser: state.authedUser
 });
 
 export default connect(mapStateToProps)(App);

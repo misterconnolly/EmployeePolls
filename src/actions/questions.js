@@ -11,7 +11,7 @@ function addQuestion(question) {
   }
 }
 
-export function handleAddQuestion(optionOneText, optionTwoText, author) {
+export function handleAddQuestion({optionOneText, optionTwoText, author}) {
   return (dispatch, getState) => {
     dispatch(showLoading());
     
@@ -22,7 +22,6 @@ export function handleAddQuestion(optionOneText, optionTwoText, author) {
       .then(() => dispatch(hideLoading()));
   }
 }
-
 
 export function receiveQuestions(tweets) {
   return {

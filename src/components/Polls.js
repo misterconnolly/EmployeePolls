@@ -1,19 +1,17 @@
 import { connect } from "react-redux";
-import PollsItem from "./PollsItem";
-
+import Poll from "./Poll";
 
 const filterQuestions = (user, questions) => {
     const questionArray = questions && questions.length === undefined 
-        ? Object.keys(questions).map((k) => questions[k]).sort((q) => q.timestamp) 
+        ? Object.keys(questions).map((k) => questions[k]).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) 
         : [];
     const answerArray = user && user.answers ? Object.keys(user.answers) : [];
 
     return [
-        questionArray.filter(q => answerArray.includes(q.id)),
-        questionArray.filter(q => !answerArray.includes(q.id))
+        questionArray.filter(q => !answerArray.includes(q.id)),
+        questionArray.filter(q => answerArray.includes(q.id))
     ]
 }
-
 
 const Polls = (props) => {
     const [haveAnswers, noAnswers] = filterQuestions(props.authedUser, props.questions);
@@ -21,11 +19,11 @@ const Polls = (props) => {
       <div>
         <span>New Questions</span>
         <ul>
-          {haveAnswers && haveAnswers.map((q) => <li key={q.id}><PollsItem question={q} /> </li>)}
+          {haveAnswers && haveAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
         </ul>
         <span>Done</span>
         <ul>
-          {noAnswers && noAnswers.map((q) => <li key={q.id}><PollsItem question={q} /> </li>)}
+          {noAnswers && noAnswers.map((q) => <li key={q.id}><Poll question={q} /> </li>)}
         </ul>
       </div>
     );
@@ -33,7 +31,7 @@ const Polls = (props) => {
 
 const mapStateToProps = (state) => ({
     questions: state.questions,
-    authedUser: state.authedUser
+    authedUser: state.users[state.authedUser.id]
 });
 
 export default connect(mapStateToProps)(Polls);

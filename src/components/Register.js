@@ -3,7 +3,7 @@ import { Button, Col, Form, Row, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleAddUser } from "../actions/users";
-import { SET_AUTHED_USER, handleLogin } from "../actions/authedUser";
+import { handleLogin } from "../actions/authedUser";
 
 const Register = ({ users, dispatch }) => {
     const navigate = useNavigate();
@@ -25,7 +25,6 @@ const Register = ({ users, dispatch }) => {
 
           dispatch(handleLogin({
             id: username,
-            password: password,
             name: fullName,
             avatarURL: avatarUrl
           }));

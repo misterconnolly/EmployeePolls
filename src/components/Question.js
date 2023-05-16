@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { ANSWER_QUESTION } from "../actions/answers";
 
 const Question = (props) => {
     const { id } = useParams();
@@ -19,12 +20,15 @@ const Question = (props) => {
     const handleOptionOne = (e) => {
         props.dispatch({
             type: ANSWER_QUESTION,
-            answer: { authedUser, qid, answer }
+            answer:  { } //{ authedUser, qid, answer }
         })
     };
 
     const handleOptionTwo = (e) => {
-
+        props.dispatch({
+            type: ANSWER_QUESTION,
+            answer:  { } //{ authedUser, qid, answer }
+        })
     };
 
     return (
@@ -41,7 +45,7 @@ const Question = (props) => {
                 </li>
                 <li>
                     ${question.optionTwo.text}
-                    <button onClick={handleOptionOne}>Answer</button>
+                    <button onClick={handleOptionTwo}>Answer</button>
                 </li>
             </ul>
           </div>
@@ -54,7 +58,7 @@ const mapStateToProps = (state, ownProps = {}) => {
     return ({
         users: state.users,
         questions: state.questions,
-        authedUser: state.authedUser    
+        authedUser: state.authedUser   
     });
 };
 
