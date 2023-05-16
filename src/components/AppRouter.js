@@ -11,10 +11,10 @@ import Leaderboard from "./Leaderboard";
 const AppRouter = ({ loggedInUser }) => {
     return (
       <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/question" exact element={<NewQuestion />} />
-        <Route path="/question/:id" exact element={<Question />} />
-        <Route path="/leaderboard" exact element={<Leaderboard />} />
+        <Route path="/" exact element={(loggedInUser) ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/question" exact element={(loggedInUser) ? <NewQuestion /> : <Navigate to="/login" />} />
+        <Route path="/question/:id" exact element={(loggedInUser) ? <Question /> : <Navigate to="/login" />} />
+        <Route path="/leaderboard" exact element={(loggedInUser) ? <Leaderboard /> : <Navigate to="/login" />} />
         <Route path="/logout" exact element={<Logout />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />

@@ -6,9 +6,7 @@ const Leaderboard = ({users}) => {
     const [sortedUsers, setSortedUsers] = useState([]);
     
     useEffect(() => {
-        if (users) {
-            setSortedUsers(transformAndSortUsers(users, formatUser));
-        }
+      setSortedUsers(transformAndSortUsers(users, formatUser));
     }, [users]);
     
     const transformAndSortUsers = (users, transform) => {
