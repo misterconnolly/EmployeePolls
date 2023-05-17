@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Poll = ({question}) => {
     const navigate = useNavigate();
 
-    const onClick = (e) => {
+    const handleClick = (e) => {
         navigate(`/question/${question.id}`);
     }
 
@@ -13,13 +13,13 @@ const Poll = ({question}) => {
 
     return (
         <Col>
-            <Card style={{ width: '14rem' }}>
+            <Card style={{ width: '14rem' }} key={question.id}>
                 <Card.Header>{question.author}</Card.Header>
                 <Card.Body>
                     <Card.Text>
                     <small>{dateFormat.format(question.timestamp)} | {timeFormat.format(question.timestamp)}</small>
                     </Card.Text>
-                    <Button variant="primary" onClick={onClick}>Show</Button>
+                    <Button variant="primary" onClick={handleClick}>Show</Button>
                 </Card.Body>
             </Card>
         </Col>

@@ -42,7 +42,7 @@ const Question = (props) => {
             <Card className="text-center">
                 <Card.Header>Poll by {author.id}</Card.Header>
                 <Card.Body>
-                <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
+                    <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
                     <Card.Title>Would You Rather?</Card.Title>
                     <Container fluid>
                         <Row>

@@ -30,22 +30,22 @@ const Polls = (props) => {
   }
 };
   
-  const filterQuestions = (user, questions) => {
-      const questionArray = questions && questions.length === undefined 
-          ? Object.keys(questions).map((k) => questions[k]).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) 
-          : [];
-      const answerArray = user && user.answers ? Object.keys(user.answers) : [];
-  
-      return [
-          questionArray.filter(q => answerArray.includes(q.id)),
-          questionArray.filter(q => !answerArray.includes(q.id))
-      ]
-  }
+const filterQuestions = (user, questions) => {
+    const questionArray = questions && questions.length === undefined 
+        ? Object.keys(questions).map((k) => questions[k]).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) 
+        : [];
+    const answerArray = user && user.answers ? Object.keys(user.answers) : [];
 
-  const mapStateToProps = (state) => ({
-    users: state.users,
-    questions: state.questions,
-    authedUser: state.authedUser,
-  });
-  
-  export default connect(mapStateToProps)(Polls);
+    return [
+        questionArray.filter(q => answerArray.includes(q.id)),
+        questionArray.filter(q => !answerArray.includes(q.id))
+    ]
+}
+
+const mapStateToProps = (state) => ({
+  users: state.users,
+  questions: state.questions,
+  authedUser: state.authedUser,
+});
+
+export default connect(mapStateToProps)(Polls);
