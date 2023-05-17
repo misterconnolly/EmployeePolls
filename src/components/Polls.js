@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import Poll from "./Poll";
-import { CardGroup } from "react-bootstrap";
-
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Tabs, Tab, Row } from "react-bootstrap";
 
 const Polls = (props) => {
   if (props.users && props.questions && props.authedUser) {
@@ -12,19 +8,19 @@ const Polls = (props) => {
     const userWithAnswers = props.users[props.authedUser.id]
     const [haveAnswers, noAnswers] = filterQuestions(userWithAnswers, props.questions);
     
-
     return (
-      <div>
-<h2>New</h2>
-        <Row xs={1} md={"auto"} className="g-4">
-          {noAnswers && noAnswers.map((q) => <Poll question={q} />)}
-        </Row>
-<h2>Done</h2>
-        <Row xs={"auto"} md={"auto"} className="g-4">
-          {haveAnswers && haveAnswers.map((q) => <Poll question={q} />)}
-        </Row>
-
-      </div>
+      <Tabs defaultActiveKey="new" className="mb-3">
+        <Tab eventKey="new" title="New">
+          <Row xs={"auto"} md={"auto"} className="g-4">
+            {noAnswers && noAnswers.map((q) => <Poll question={q} />)}
+          </Row>
+        </Tab>
+        <Tab eventKey="done" title="Done">
+          <Row xs={"auto"} md={"auto"} className="g-4">
+            {haveAnswers && haveAnswers.map((q) => <Poll question={q} />)}
+          </Row>
+        </Tab>
+      </Tabs>
     );
 
   } 

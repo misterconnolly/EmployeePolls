@@ -36,7 +36,6 @@ const Leaderboard = ({users}) => {
 
     return (
       <div>
-        <h1>Leaderboard</h1>
         <Table striped bordered>
           <thead>
             <tr>
@@ -48,7 +47,7 @@ const Leaderboard = ({users}) => {
           <tbody>
             {sortedUsers.map((user) => (
               <tr key={user.id}>
-                <td><img src={user.avatarURL} alt="User avatar" className="avatar-max-width-20p" />{user.name} <br/> {user.id}</td>
+                <td><img src={user.avatarURL} alt="User avatar" className="avatar-max-width-20p" />{user.name} ({user.id})</td>
                 <td>{user.answersCount}</td>
                 <td>{user.questionsCount}</td>
               </tr>

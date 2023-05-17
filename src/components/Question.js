@@ -43,7 +43,7 @@ const Question = (props) => {
                 <Card.Header>Poll by {author.id}</Card.Header>
                 <Card.Body>
                 <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
-                    <Card.Text><h3>Would You Rather?</h3></Card.Text>
+                    <Card.Title>Would You Rather?</Card.Title>
                     <Container fluid>
                         <Row>
                             <Col><Button variant="primary" onClick={handleOptionOne}>{question.optionOne.text}</Button></Col>

@@ -127,8 +127,6 @@ const Register = ({ users, dispatch }) => {
 
     return (
       <div>
-        <h2>Register</h2>
-
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -214,7 +212,7 @@ const Register = ({ users, dispatch }) => {
                 <Image
                   src={avatarUrl}
                   alt="User avatar"
-                  className="avatar-max-width-20p"
+                  className="avatar-max-width-40p"
                   onError={() => setAvatarIsValid(false)}
                 />
               )}

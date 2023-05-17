@@ -38,7 +38,6 @@ const Login = ({ users, dispatch }) => {
     return (
       <div>
         {error && <h2 data-testid="error-header">Log in failed</h2>}
-        <h3 className="center">Login</h3>
 
         <Form noValidate onSubmit={handleSubmit}>
         <Row className="mb-3">

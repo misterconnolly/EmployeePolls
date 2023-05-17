@@ -53,6 +53,10 @@
   max-width: 20%;
 }
 
+.avatar-max-width-40p {
+  max-width: 40%;
+}
+
 .question{
   display: flex;
   width: 60%;
@@ -61,6 +65,7 @@
   text-align: center;
 }
 
-.question-card {
+
+.app-container {
   padding-top: 10px;
 }

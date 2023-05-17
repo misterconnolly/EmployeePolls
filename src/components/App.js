@@ -21,7 +21,9 @@ const App = (props) => {
       <LoadingBar />
       <div className="container">
         <Navigation loggedInUser={loggedInUser()} />
-        <AppRouter loggedInUser={loggedInUser()} />
+        <div className="app-container">
+          <AppRouter loggedInUser={loggedInUser()} />
+        </div>
       </div>
     </Fragment>
   );  
