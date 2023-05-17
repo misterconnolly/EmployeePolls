@@ -12,7 +12,7 @@ const AppRouter = ({ loggedInUser }) => {
     return (
       <Routes>
         <Route path="/" exact element={(loggedInUser) ? <Polls /> : <Navigate to="/login" />} />
-        <Route path="/question" exact element={(loggedInUser) ? <NewQuestion /> : <Navigate to="/login" />} />
+        <Route path="/add" exact element={(loggedInUser) ? <NewQuestion /> : <Navigate to="/login" />} />
         <Route path="/question/:id" exact element={(loggedInUser) ? <Question /> : <Navigate to="/login" />} />
         <Route path="/leaderboard" exact element={(loggedInUser) ? <Leaderboard /> : <Navigate to="/login" />} />
         <Route path="/logout" exact element={<Logout />} />

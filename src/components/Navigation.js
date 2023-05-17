@@ -8,14 +8,11 @@ const Navigation = ({ loggedInUser }) => {
     <Navbar bg="light" variant="light">
       {(loggedInUser !== null && loggedInUser !== undefined) && (
         <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>Employee Polls</Navbar.Brand>
-          </LinkContainer>
           <Nav className="me-auto">
             <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>Employee Polls</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/question">
+            <LinkContainer to="/add">
               <Nav.Link>New</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/leaderboard">
@@ -38,9 +35,6 @@ const Navigation = ({ loggedInUser }) => {
 
       {(loggedInUser === null || loggedInUser === undefined) && (
         <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>Employee Polls</Navbar.Brand>
-          </LinkContainer>
           <Nav className="me-auto">
             <LinkContainer to="/login">
               <Nav.Link>Login</Nav.Link>
