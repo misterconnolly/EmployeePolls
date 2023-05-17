@@ -12,12 +12,12 @@ const Polls = (props) => {
       <Tabs defaultActiveKey="new" className="mb-3">
         <Tab eventKey="new" title="New">
           <Row xs={"auto"} md={"auto"} className="g-4">
-            {noAnswers && noAnswers.map((q) => <Poll question={q} />)}
+            {noAnswers && noAnswers.map((q) => <Poll question={q} key={q.id} />)}
           </Row>
         </Tab>
         <Tab eventKey="done" title="Done">
           <Row xs={"auto"} md={"auto"} className="g-4">
-            {haveAnswers && haveAnswers.map((q) => <Poll question={q} />)}
+            {haveAnswers && haveAnswers.map((q) => <Poll question={q} key={q.id} />)}
           </Row>
         </Tab>
       </Tabs>
