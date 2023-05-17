@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 import { createAvatarUrlIfEmpty } from "../util/avatar";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 
 const Question = (props) => {
     const { id } = useParams();
@@ -36,25 +37,23 @@ const Question = (props) => {
     };
 
     return (
-      <div>
+        <div className="question-card">
         {question && author && props.authedUser && (
-          <div>
-            <h1>Poll by ${author.id}</h1>
-            <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
-            <h2>Would you rather?</h2>
-            <ul>
-                <li>
-                    ${question.optionOne.text}
-                    <button onClick={handleOptionOne}>Answer</button>
-                </li>
-                <li>
-                    ${question.optionTwo.text}
-                    <button onClick={handleOptionTwo}>Answer</button>
-                </li>
-            </ul>
-          </div>
+            <Card className="text-center">
+                <Card.Header>Poll by {author.id}</Card.Header>
+                <Card.Body>
+                <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
+                    <Card.Text><h3>Would You Rather?</h3></Card.Text>
+                    <Container fluid>
+                        <Row>
+                            <Col><Button variant="primary" onClick={handleOptionOne}>{question.optionOne.text}</Button></Col>
+                            <Col><Button variant="primary" onClick={handleOptionTwo}>{question.optionTwo.text}</Button></Col>
+                        </Row>
+                    </Container>
+                </Card.Body>
+            </Card>
         )}
-      </div>
+        </div>
     );
 };
 

@@ -41,7 +41,6 @@
   background: none!important;
   border: none;
   padding: 0!important;
-  //color: #069;
   text-decoration: underline;
   cursor: pointer;
   margin-top: 0.0rem;
@@ -52,4 +51,16 @@
 
 .avatar-max-width-20p {
   max-width: 20%;
+}
+
+.question{
+  display: flex;
+  width: 60%;
+  justify-content:center;
+  margin:0 auto;
+  text-align: center;
+}
+
+.question-card {
+  padding-top: 10px;
 }
