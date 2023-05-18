@@ -41,31 +41,35 @@ const Login = ({ users, dispatch }) => {
 
         <Form noValidate onSubmit={handleSubmit}>
         <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom01">
-                  <Form.Label>Username</Form.Label>
+              <Form.Group as={Col} md="4">
+                  <Form.Label htmlFor="usernameInput">Username</Form.Label>
                   <Form.Control
                       required
                       type="text"
+                      id="usernameInput"
                       placeholder="Username"
                       defaultValue=""
                       onChange={handleChangeUsername}
+                      data-testid="usernameInput"
                   />
               </Form.Group>
           </Row>
           <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-                  <Form.Label>Password</Form.Label>
+              <Form.Group as={Col} md="4">
+                  <Form.Label htmlFor="passwordInput">Password</Form.Label>
                   <Form.Control
                       required
                       type="password"
+                      id="passwordInput"
                       placeholder="Password"
                       defaultValue=""
                       onChange={handleChangePassword}
+                      data-testid="passwordInput"
                   />
               </Form.Group>
           </Row>
         
-          <Button type="submit">Log in</Button>
+          <Button type="submit" data-testid="login-submit">Log in</Button>
 
         </Form>
       </div>
