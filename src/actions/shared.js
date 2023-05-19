@@ -1,5 +1,4 @@
 import { getInitialData } from "../data/api";
-import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const RECEIVE_DATA = "RECEIVE_DATA";
 
@@ -13,15 +12,9 @@ function receiveData(users, questions) {
 
 export function handleInitialData () {
     return (dispatch) => {
-        //dispatch(showLoading());
 
         return getInitialData().then(({ users, questions }) => {
             dispatch(receiveData(users, questions));
-
-            /// TODO: Remove after devlopment
-           // dispatch(setAuthedUser(users[Object.keys(users)[0]]));
-            
-            //dispatch(hideLoading());
         })
     }
 }
