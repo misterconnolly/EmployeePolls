@@ -1,6 +1,6 @@
 import {
   _getUsers,
-  _saveUser,
+  _createUser,
   _getQuestions,
   _saveQuestion,
   _saveQuestionAnswer,
@@ -19,8 +19,8 @@ export function getUsers() {
     return _getUsers();
 }
 
-export function saveUser(info) {
-  return _saveUser(info);
+export function createUser(info) {
+  return _createUser(info);
 }
 
 export function getQuestions() {

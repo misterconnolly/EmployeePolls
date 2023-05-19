@@ -1,4 +1,4 @@
-import { saveUser } from "../data/api";
+import { createUser } from "../data/api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const RECEIVE_USERS = "RECIEVE_USERS";
@@ -22,7 +22,7 @@ export function handleAddUser({id, name, password, avatarURL}) {
   return (dispatch, getState) => {
     dispatch(showLoading());
 
-    return saveUser({
+    return createUser({
       id,
       name,
       password,

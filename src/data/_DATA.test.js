@@ -1,4 +1,4 @@
-import { _getUsers, _saveQuestionAnswer, _saveQuestion, _saveUser } from './_DATA';
+import { _getUsers, _saveQuestionAnswer, _saveQuestion, _createUser } from './_DATA';
 import { uniqueString } from "../util/test";
 
 const getUser = async (id) => {
@@ -11,11 +11,12 @@ const createTestUser = async () => {
     const password = uniqueString(7);
     const avatarURL = uniqueString(7);
 
-    const user = await _saveUser({
+    const user = await _createUser({
       name: name,
       password: password,
       avatarURL: avatarURL,
     });
+
     return user;
 }
 
@@ -47,56 +48,56 @@ describe("_saveQuestionAnswer", () => {
     expect(answer).toBeInstanceOf(Promise);
   });
 
-   it("should create a new answer to a question", async () => {
-    const testUser = await createTestUser();
-    const testQuestion = await createTestQuestion(testUser.id);
+ it("should create a new answer to a question", async () => {
+  const testUser = await createTestUser();
+  const testQuestion = await createTestQuestion(testUser.id);
 
-    const result = await _saveQuestionAnswer({
-      authedUser: testUser.id,
-      qid: testQuestion.id,
-      answer: expectedAnswer,
-    });
-    expect(result).toEqual(true);
-    
-    const reloadedUser = await getUser(testUser.id);
-    expect(reloadedUser.id).toEqual(testUser.id);
-    expect(reloadedUser.answers[testQuestion.id]).toEqual(expectedAnswer);
+  const result = await _saveQuestionAnswer({
+    authedUser: testUser.id,
+    qid: testQuestion.id,
+    answer: expectedAnswer,
   });
+  expect(result).toEqual(true);
+  
+  const reloadedUser = await getUser(testUser.id);
+  expect(reloadedUser.id).toEqual(testUser.id);
+  expect(reloadedUser.answers[testQuestion.id]).toEqual(expectedAnswer);
+});
 
-  it("should reject if missing authedUser", async () => {
-    const qid = uniqueString(10);
-    const answer = uniqueString(10);
+it("should reject if missing authedUser", async () => {
+  const qid = uniqueString(10);
+  const answer = uniqueString(10);
 
-    const questionAnswer = {
-      qid: qid,
-      answer: answer,
-    };
-    await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
-  });
+  const questionAnswer = {
+    qid: qid,
+    answer: answer,
+  };
+  await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
+});
 
-  it("should reject if missing qid", async () => {
-    const authedUser = uniqueString(10);
-    const answer = uniqueString(10);
+it("should reject if missing qid", async () => {
+  const authedUser = uniqueString(10);
+  const answer = uniqueString(10);
 
-    const questionAnswer = {
-      authedUser: authedUser,
-      qid: '',
-      answer: answer,
-    };
-    await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
-  });
+  const questionAnswer = {
+    authedUser: authedUser,
+    qid: '',
+    answer: answer,
+  };
+  await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
+});
 
-  it("should reject if missing answer", async () => {
-    const authedUser = uniqueString(10);
-    const qid = uniqueString(10);
+it("should reject if missing answer", async () => {
+  const authedUser = uniqueString(10);
+  const qid = uniqueString(10);
 
-    const questionAnswer = {
-      authedUser: authedUser,
-      qid: qid,
-      answer: '',
-    };
-    await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
-  });
+  const questionAnswer = {
+    authedUser: authedUser,
+    qid: qid,
+    answer: '',
+  };
+  await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual(expectedRejectMessage);
+});
 });
 
 describe('_saveQuestion', () => {
@@ -154,14 +155,14 @@ describe('_saveQuestion', () => {
     });
 });
 
-describe('_saveUser', () => {
+describe('_createUser', () => {
     const expectedRejectMessage = "Please provide name, password, and avatarURL";
     const expectedName = uniqueString(10);
     const expectedPassword = uniqueString(10);
     const expectedAvatarURL = uniqueString(10);
 
     it("should return a promise", () => {
-      const result = _saveUser({
+      const result = _createUser({
         name: expectedName,
         password: expectedPassword,
         avatarURL: expectedAvatarURL,
@@ -170,7 +171,7 @@ describe('_saveUser', () => {
     });
 
     it("should create user with id", async () => {
-      const newUser = await _saveUser({
+      const newUser = await _createUser({
         name: expectedName,
         password: expectedPassword,
         avatarURL: expectedAvatarURL,
@@ -192,7 +193,7 @@ describe('_saveUser', () => {
         password: expectedPassword,
         avatarURL: expectedAvatarURL,
       };
-      await expect(_saveUser(user)).rejects.toEqual(expectedRejectMessage);
+      await expect(_createUser(user)).rejects.toEqual(expectedRejectMessage);
     });
 
     it("should reject if missing password", async () => {
@@ -201,7 +202,7 @@ describe('_saveUser', () => {
           password: '',
           avatarURL: expectedAvatarURL,
         };
-        await expect(_saveUser(user)).rejects.toEqual(expectedRejectMessage);
+        await expect(_createUser(user)).rejects.toEqual(expectedRejectMessage);
       });
 
       it("should reject if missing avatarURL", async () => {
@@ -210,6 +211,6 @@ describe('_saveUser', () => {
           password: expectedPassword,
           avatarURL: '',
         };
-        await expect(_saveUser(user)).rejects.toEqual(expectedRejectMessage);
+        await expect(_createUser(user)).rejects.toEqual(expectedRejectMessage);
       });
 });
