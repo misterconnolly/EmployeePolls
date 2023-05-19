@@ -20,19 +20,19 @@ To run this project:
 
 ## What You Get
 ### Login
-![Login](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-login.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-login.png" alt="Login screen" /></kbd>
 
 ### Register
-![Register](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-register.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-register.png?raw=true" alt="Register screen" /></kbd>
 
 ### Employee Polls
-![Polls](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-polls.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-polls.png?raw=true" alt="Polls screen" /></kbd>
 
 ### Poll
-![Poll](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-poll.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-poll.png?raw=true" alt="Poll screen" /></kbd>
 
 ### New Poll
-![New Poll](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-new.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-new.png?raw=true" alt="New poll screen" /></kbd>
 
 ### Leaderboard
-![Leaderboard](https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-leaderboard.png?raw=true)
+<kbd><img src="https://github.com/misterconnolly/EmployeePolls/blob/main/screenshots/employee-polls-leaderboard.png?raw=true" alt="Leaderboard screen" /></kbd>
