@@ -17,7 +17,7 @@ const Login = ({ users, dispatch }) => {
 
       if (authenticate(username, password)) {
         dispatch(handleLogin(users[username]));
-
+        
         navigate("/");
       } else {
         setError(true);
@@ -28,6 +28,7 @@ const Login = ({ users, dispatch }) => {
     
     const [username, setUsername] = useState("");
     const handleChangeUsername = (e) => {
+      
       setUsername(e.target.value);
     };
     const [password, setPassword] = useState("");
@@ -50,7 +51,7 @@ const Login = ({ users, dispatch }) => {
                       placeholder="Username"
                       defaultValue=""
                       onChange={handleChangeUsername}
-                      data-testid="usernameInput"
+                      data-testid="login-username"
                   />
               </Form.Group>
           </Row>
@@ -64,7 +65,7 @@ const Login = ({ users, dispatch }) => {
                       placeholder="Password"
                       defaultValue=""
                       onChange={handleChangePassword}
-                      data-testid="passwordInput"
+                      data-testid="login-password"
                   />
               </Form.Group>
           </Row>

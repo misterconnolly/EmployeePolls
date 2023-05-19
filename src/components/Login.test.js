@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';
 import Login from './Login';
 import { BrowserRouter as Router } from "react-router-dom";
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 const mockStore = configureStore([]);
 
@@ -53,6 +53,19 @@ describe('Login rendered', () => {
   describe('Login screen', () => {
 
     it("should render username, password, and submit", () => {
+      render(
+        <Provider store={store}>
+          <Router>
+            <Login />
+          </Router>
+        </Provider>
+      );
+      expect(screen.getByTestId("login-username")).toBeInTheDocument();
+      expect(screen.getByTestId("login-password")).toBeInTheDocument();
+      expect(screen.getByTestId("login-submit")).toBeInTheDocument();
+    });
+
+    it("should display error when bad login is attempted", () => {
 
       render(
         <Provider store={store}>
@@ -62,9 +75,17 @@ describe('Login rendered', () => {
         </Provider>
       );
 
-      expect(screen.getByTestId("usernameInput")).toBeInTheDocument();
-      expect(screen.getByTestId("passwordInput")).toBeInTheDocument();
-      expect(screen.getByTestId("login-submit")).toBeInTheDocument();
-    });
+      expect(screen.queryByTestId("error-header")).not.toBeInTheDocument();
 
+      var username = screen.getByTestId("login-username");
+      var password = screen.getByTestId("login-password");
+      var button = screen.getByTestId("login-submit");
+
+      fireEvent.change(username, { target: { value: 'fakeusername' }})
+      fireEvent.change(password, { target: { value: 'fakepassword' }})
+      fireEvent.click(button);
+
+      expect(screen.getByTestId("error-header")).toBeInTheDocument();
+    });
+    
   });
