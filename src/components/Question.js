@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 import { createAvatarUrlIfEmpty } from "../util/avatar";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
@@ -9,7 +9,6 @@ const Question = (props) => {
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
     const [author, setAuthor] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         setQuestion(props.questions[id]);
@@ -25,7 +24,6 @@ const Question = (props) => {
             authedUser: props.authedUser.id,
             qid: id, 
             answer: 'optionOne'}));
-            navigate("/");
     };
 
     const handleOptionTwo = (e) => {
@@ -33,7 +31,6 @@ const Question = (props) => {
             authedUser: props.authedUser.id,
             qid: id, 
             answer: 'optionTwo'}));
-            navigate("/");
     };
 
     return (
