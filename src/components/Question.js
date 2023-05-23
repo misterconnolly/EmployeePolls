@@ -1,59 +1,126 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 import { createAvatarUrlIfEmpty } from "../util/avatar";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 const Question = (props) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
     const [author, setAuthor] = useState(null);
-    const navigate = useNavigate();
+    const [answer, setAnswer] = useState("");
+    const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        setQuestion(props.questions[id]);
+      handleQuestionNotFound();
+
+      setQuestion(props.questions[id]);
+      setStats(optionStats(props.questions[id]));
     }, [props.questions, id]);
 
     useEffect(() => {
-        if (props.questions[id] && props.questions[id].author)
-            setAuthor(props.users[props.questions[id].author])
-    }, [props.users, props.questions, id]);    
+      if (props.questions[id] && props.questions[id].author) {
+        setAuthor(props.users[props.questions[id].author]);
+      }
+    }, [props.users, props.questions, id]);
 
-    const handleOptionOne = (e) => {
+    useEffect(() => {
+      handleQuestionNotFound();
+      if (props.authedUser && props.users[props.authedUser.id].answers[id]) {
+        setAnswer(props.users[props.authedUser.id].answers[id]);
+      }
+    }, [props.users, props.questions, id, props.authedUser]); 
+
+    const handleQuestionNotFound = () => {
+      if (Object.keys(props.questions).length > 0 && !props.questions[id]) {
+        navigate("/notfound", { state: { originalUrl: `http://${window.location.hostname}${location.pathname}` } });
+      }
+    }
+
+    const optionStats = (q) => {
+      const votesOne = q && q.optionOne && q.optionOne.votes.length;
+      const votesTwo = q && q.optionTwo && q.optionTwo.votes.length;
+      const votes = votesOne + votesTwo;
+      return {
+        optionOne: `${votesOne}/${votes} votes ${percent(votesOne / votes)}`,
+        optionTwo: `${votesTwo}/${votes} votes ${percent(votesTwo / votes)}`
+      };
+    }
+
+    const percent = (num) => {
+      return Number(num/100).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2}); 
+    }
+
+    const handleSelect = (e) => {
         props.dispatch(handleAnswerQuestion({
             authedUser: props.authedUser.id,
             qid: id, 
-            answer: 'optionOne'}));
-            navigate("/");
-    };
-
-    const handleOptionTwo = (e) => {
-        props.dispatch(handleAnswerQuestion({
-            authedUser: props.authedUser.id,
-            qid: id, 
-            answer: 'optionTwo'}));
-            navigate("/");
+            answer: e.target.value}));
     };
 
     return (
-        <div className="question-card">
+      <div className="question-card">
         {question && author && props.authedUser && (
-            <Card className="text-center">
-                <Card.Header>Poll by {author.id}</Card.Header>
-                <Card.Body>
-                    <img src={createAvatarUrlIfEmpty(author.avatarURL, author.name)} alt="User avatar" className="avatar-max-width-20p" />
-                    <Card.Title>Would You Rather?</Card.Title>
-                    <Container fluid>
-                        <Row>
-                            <Col><Button variant="primary" onClick={handleOptionOne}>{question.optionOne.text}</Button></Col>
-                            <Col><Button variant="primary" onClick={handleOptionTwo}>{question.optionTwo.text}</Button></Col>
-                        </Row>
-                    </Container>
-                </Card.Body>
-            </Card>
+          <Card className="text-center">
+            <Card.Header>Poll by {author.id}</Card.Header>
+            <Card.Body>
+              <img
+                src={createAvatarUrlIfEmpty(author.avatarURL, author.name)}
+                alt="User avatar"
+                className="avatar-max-width-20p"
+              />
+              <Card.Title>Would You Rather?</Card.Title>
+              <Container fluid>
+                <Row>
+                  <ButtonGroup>
+                    <Col>
+                      <ToggleButton
+                        key="optionOne"
+                        id={`radio-optionOne`}
+                        type="radio"
+                        variant={'outline-primary'}
+                        name="radio"
+                        value="optionOne"
+                        checked={answer === "optionOne"}
+                        onChange={handleSelect}
+                      >
+                        {question.optionOne.text}
+                      </ToggleButton>
+                      <br/>
+                      <Card.Text>{stats &&
+                        stats.optionOne
+                      }</Card.Text>
+                    </Col>
+                    <Col>
+                      <ToggleButton
+                        key="optionTwo"
+                        id={`radio-optionTwo`}
+                        type="radio"
+                        variant={'outline-primary'}
+                        name="radio"
+                        value="optionTwo"
+                        checked={answer === "optionTwo"}
+                        onChange={handleSelect}
+                      >
+                        {question.optionTwo.text}
+                      </ToggleButton>
+                      <br/>
+                      <Card.Text>{stats &&
+                        stats.optionTwo
+                      }</Card.Text>
+                    </Col>
+                  </ButtonGroup>
+                </Row>
+              </Container>
+
+            </Card.Body>
+          </Card>
         )}
-        </div>
+      </div>
     );
 };
 

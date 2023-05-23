@@ -32,7 +32,7 @@ const Polls = (props) => {
   
 const filterQuestions = (user, questions) => {
     const questionArray = questions && questions.length === undefined 
-        ? Object.keys(questions).map((k) => questions[k]).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) 
+        ? Object.keys(questions).map((k) => questions[k]).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) 
         : [];
     const answerArray = user && user.answers ? Object.keys(user.answers) : [];
 
