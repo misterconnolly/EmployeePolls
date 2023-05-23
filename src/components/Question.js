@@ -3,29 +3,49 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 import { createAvatarUrlIfEmpty } from "../util/avatar";
-import { Container, Row, Col, Button, Card, ButtonGroup, ToggleButton } from "react-bootstrap";
+import { Container, Row, Col, Card, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 const Question = (props) => {
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
     const [author, setAuthor] = useState(null);
     const [answer, setAnswer] = useState("");
+    const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        setQuestion(props.questions[id]);
+      setQuestion(props.questions[id]);
+      setStats(optionStats(props.questions[id]));
     }, [props.questions, id]);
 
     useEffect(() => {
-        if (props.questions[id] && props.questions[id].author)
-            setAuthor(props.users[props.questions[id].author])
-    }, [props.users, props.questions, id]); 
-    
-    useEffect(() => {
-        if (props.users[props.authedUser.id].answers[id])
-            setAnswer(props.users[props.authedUser.id].answers[id])
-    }, [props.users, props.questions, id, props.authedUser.id]); 
-    
+      if (props.questions[id] && props.questions[id].author) {
+        setAuthor(props.users[props.questions[id].author]);
+      }
+    }, [props.users, props.questions, id]);
 
+    useEffect(
+      () => {
+        if (props.users[props.authedUser.id].answers[id]) {
+          setAnswer(props.users[props.authedUser.id].answers[id]);
+        }
+      },
+      [props.users, props.questions, id, props.authedUser.id],
+      props.questions[id]
+    ); 
+    
+    const optionStats = (q) => {
+      const votesOne = q.optionOne.votes.length;
+      const votesTwo = q.optionTwo.votes.length;
+      const votes = votesOne + votesTwo;
+      return {
+        optionOne: `${votesOne}/${votes} votes ${percent(votesOne / votes)}`,
+        optionTwo: `${votesTwo}/${votes} votes ${percent(votesTwo / votes)}`
+      };
+    }
+
+    const percent = (num) => {
+      return Number(num/100).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2}); 
+    }
 
     const handleSelect = (e) => {
         props.dispatch(handleAnswerQuestion({
@@ -33,7 +53,6 @@ const Question = (props) => {
             qid: id, 
             answer: e.target.value}));
     };
-
 
     return (
       <div className="question-card">
@@ -63,6 +82,10 @@ const Question = (props) => {
                       >
                         {question.optionOne.text}
                       </ToggleButton>
+                      <br/>
+                      <Card.Text>{stats &&
+                        stats.optionOne
+                      }</Card.Text>
                     </Col>
                     <Col>
                       <ToggleButton
@@ -77,7 +100,10 @@ const Question = (props) => {
                       >
                         {question.optionTwo.text}
                       </ToggleButton>
-
+                      <br/>
+                      <Card.Text>{stats &&
+                        stats.optionTwo
+                      }</Card.Text>
                     </Col>
                   </ButtonGroup>
                 </Row>
