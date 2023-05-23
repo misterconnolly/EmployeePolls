@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/answers";
 import { createAvatarUrlIfEmpty } from "../util/avatar";
 import { Container, Row, Col, Card, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 const Question = (props) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const { id } = useParams();
     const [question, setQuestion] = useState(null);
     const [author, setAuthor] = useState(null);
@@ -13,6 +16,8 @@ const Question = (props) => {
     const [stats, setStats] = useState(null);
 
     useEffect(() => {
+      handleQuestionNotFound();
+
       setQuestion(props.questions[id]);
       setStats(optionStats(props.questions[id]));
     }, [props.questions, id]);
@@ -23,19 +28,22 @@ const Question = (props) => {
       }
     }, [props.users, props.questions, id]);
 
-    useEffect(
-      () => {
-        if (props.users[props.authedUser.id].answers[id]) {
-          setAnswer(props.users[props.authedUser.id].answers[id]);
-        }
-      },
-      [props.users, props.questions, id, props.authedUser.id],
-      props.questions[id]
-    ); 
-    
+    useEffect(() => {
+      handleQuestionNotFound();
+      if (props.authedUser && props.users[props.authedUser.id].answers[id]) {
+        setAnswer(props.users[props.authedUser.id].answers[id]);
+      }
+    }, [props.users, props.questions, id, props.authedUser]); 
+
+    const handleQuestionNotFound = () => {
+      if (Object.keys(props.questions).length > 0 && !props.questions[id]) {
+        navigate("/notfound", { state: { originalUrl: `http://${window.location.hostname}${location.pathname}` } });
+      }
+    }
+
     const optionStats = (q) => {
-      const votesOne = q.optionOne.votes.length;
-      const votesTwo = q.optionTwo.votes.length;
+      const votesOne = q && q.optionOne && q.optionOne.votes.length;
+      const votesTwo = q && q.optionTwo && q.optionTwo.votes.length;
       const votes = votesOne + votesTwo;
       return {
         optionOne: `${votesOne}/${votes} votes ${percent(votesOne / votes)}`,
